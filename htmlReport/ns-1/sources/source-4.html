@@ -1,0 +1,160 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > HomeController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.fluffy.universe.controllers</a>
+</div>
+
+<h1>Coverage Summary for Class: HomeController (com.fluffy.universe.controllers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HomeController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/25)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.fluffy.universe.controllers;
+&nbsp;
+&nbsp;import com.fluffy.universe.models.Role;
+&nbsp;import com.fluffy.universe.services.PostService;
+&nbsp;import com.fluffy.universe.utils.SessionUtils;
+&nbsp;import io.javalin.Javalin;
+&nbsp;import io.javalin.http.Context;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;public class HomeController extends Controller {
+<b class="nc">&nbsp;    private static final List&lt;Integer&gt; allowedPaginationSizeOptions = List.of(4, 8, 12);</b>
+&nbsp;
+&nbsp;    public HomeController(Javalin application) {
+<b class="nc">&nbsp;        super(&quot;&quot;, application);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private static int tryParse(String value, int defaultValue) {
+&nbsp;        try {
+<b class="nc">&nbsp;            return Integer.parseInt(value);</b>
+<b class="nc">&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc">&nbsp;            return defaultValue;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void homePage(Context context) {
+<b class="nc">&nbsp;        int pageNumber = tryParse(context.queryParam(&quot;page&quot;), 1);</b>
+<b class="nc">&nbsp;        int pageSize = tryParse(context.queryParam(&quot;size&quot;), 10);</b>
+<b class="nc">&nbsp;        int postCount = PostService.getPostCount();</b>
+<b class="nc">&nbsp;        int maxPage = (int) Math.round(Math.ceil(postCount / (double) pageSize));</b>
+<b class="nc">&nbsp;        if (pageNumber &gt; maxPage) {</b>
+<b class="nc">&nbsp;            pageNumber = maxPage;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (!allowedPaginationSizeOptions.contains(pageSize)) {</b>
+<b class="nc">&nbsp;            pageSize = allowedPaginationSizeOptions.get(0);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        Map&lt;String, Object&gt; model = SessionUtils.getCurrentModel(context);</b>
+<b class="nc">&nbsp;        List&lt;Map&lt;String, Object&gt;&gt; posts = PostService.getUserPosts(pageNumber, pageSize);</b>
+<b class="nc">&nbsp;        model.put(&quot;posts&quot;, posts);</b>
+<b class="nc">&nbsp;        model.put(&quot;paginationRecordCount&quot;, postCount);</b>
+<b class="nc">&nbsp;        model.put(&quot;paginationPageSize&quot;, pageSize);</b>
+<b class="nc">&nbsp;        model.put(&quot;paginationCurrentPage&quot;, pageNumber);</b>
+<b class="nc">&nbsp;        model.put(&quot;paginationSpread&quot;, 2);</b>
+<b class="nc">&nbsp;        model.put(&quot;paginationBaseURL&quot;, &quot;/&quot;);</b>
+<b class="nc">&nbsp;        model.put(&quot;paginationPageSizeOptions&quot;, allowedPaginationSizeOptions);</b>
+&nbsp;
+<b class="nc">&nbsp;        render(context, &quot;/views/pages/home.vm&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void registerRoutes(Javalin application) {
+<b class="nc">&nbsp;        application.get(&quot;/&quot;, this::homePage, Role.values());</b>
+<b class="nc">&nbsp;        application.get(&quot;/home&quot;, this::homePage, Role.values());</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-14 13:17</div>
+</div>
+</body>
+</html>
