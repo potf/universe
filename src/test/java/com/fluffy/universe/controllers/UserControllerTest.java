@@ -15,13 +15,24 @@ import static org.mockito.Mockito.*;
 
 public class UserControllerTest {
 
-    @Test
-    public void registerRoutesTest() {
-        Javalin app = Mockito.mock(Javalin.class);
-        UserController usrctr=new UserController(app);
-        usrctr.registerRoutes(app);
-        Mockito.inOrder(app).verify(app, VerificationModeFactory.calls(12)).get(Mockito.anyString(), Mockito.any(Handler.class), Mockito.any(Role.class));
+
+    private UserController userController;
+    private Context context;
+
+    @BeforeEach
+    public void setup() {
+        userController = new UserController(null); // Pass a Javalin instance if necessary
+        context = Mockito.mock(Context.class);
     }
 
+    @Test
+    public void testSignUpPage() {
+        // Arrange
 
+        // Act
+        userController.signUpPage(context);
+
+        // Assert
+        verify(context).render(eq("/views/pages/models/user/sign-up.vm"));
+    }
 }
