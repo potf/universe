@@ -1,24 +1,11 @@
 package com.fluffy.universe.controllers;
 
-import com.fluffy.universe.controllers.UserController;
 import com.fluffy.universe.models.Role;
-import com.fluffy.universe.models.User;
-import com.fluffy.universe.utils.Configuration;
-import com.fluffy.universe.utils.ServerData;
-import com.fluffy.universe.utils.SessionUtils;
 import io.javalin.Javalin;
-import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.mockito.internal.verification.VerificationModeFactory;
-
-import java.io.File;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class UserControllerTest {
 
