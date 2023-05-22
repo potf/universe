@@ -1,38 +1,32 @@
 package com.fluffy.universe.controllers;
 
+import com.fluffy.universe.controllers.UserController;
 import com.fluffy.universe.models.Role;
+import com.fluffy.universe.models.User;
+import com.fluffy.universe.utils.Configuration;
+import com.fluffy.universe.utils.ServerData;
+import com.fluffy.universe.utils.SessionUtils;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.internal.verification.VerificationModeFactory;
 
-import static org.mockito.Mockito.*;
+import java.io.File;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class UserControllerTest {
 
-
-    private UserController userController;
-    private Context context;
-
-    @BeforeEach
-    public void setup() {
-        userController = new UserController(null); // Pass a Javalin instance if necessary
-        context = Mockito.mock(Context.class);
-    }
-
     @Test
-    public void testSignUpPage() {
-        // Arrange
-
-        // Act
-        userController.signUpPage(context);
-
-        // Assert
-        verify(context).render(eq("/views/pages/models/user/sign-up.vm"));
+    public void registerRoutesTest() {
+        Javalin app = Mockito.mock(Javalin.class);
+        UserController usrctr=new UserController(app);
+        usrctr.registerRoutes(app);
+        Mockito.inOrder(app).verify(app, VerificationModeFactory.calls(12)).get(Mockito.anyString(), Mockito.any(Handler.class), Mockito.any(Role.class));
     }
 }
