@@ -12,6 +12,7 @@ Disabled Login Test
     input text      id:Password
     Click Log In
     Wait Until Page Contains    input field
+    Take Screenshot
     Close Browser
 
 Failed Login Test
@@ -38,6 +39,7 @@ Failed Login
     input text      id:Password  ${password}
     Click Log In
     Wait Until Page Contains    Invalid username/password, Try again!
+    Take Screenshot
     Close Browser
 
 Successful Login
@@ -47,4 +49,5 @@ Successful Login
     input text      id:Password  ${password}
     Click Log In
     Page Should Contain Button  xpath=//a[contains(text(),'Logout')]
+    Take Screenshot
     Close Browser
